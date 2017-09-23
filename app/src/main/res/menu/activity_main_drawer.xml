@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_course"
+            android:title="@string/nav_course"
+            android:icon="@drawable/ic_event_note_white_24dp"/>
+        <!--<item-->
+            <!--android:id="@+id/nav_score"-->
+            <!--android:title="@string/nav_score" />-->
+        <item
+            android:id="@+id/nav_lab"
+            android:title="@string/nav_lab"
+            android:icon="@drawable/ic_school_white_24dp"/>
+        <item
+            android:id="@+id/nav_tools"
+            android:title="@string/nav_tools"
+            android:icon="@drawable/ic_work_white_24dp"
+            />
+    </group>
+
+    <item android:title="@string/setting">
+        <menu>
+            <item
+                android:id="@+id/nav_me"
+                android:title="@string/nav_me"
+                android:icon="@drawable/ic_account_circle_white_24dp"/>
+            <item
+                android:id="@+id/nav_about"
+                android:title="@string/about"
+                android:icon="@drawable/ic_info_outline_white_24dp"/>
+        </menu>
+    </item>
+</menu>

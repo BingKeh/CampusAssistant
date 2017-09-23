@@ -1,0 +1,37 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="colorControlNormal">@color/oil</item>
+        <!--<item name="colorControlHighlight">@color/colorPrimaryDark</item>-->
+
+        <item name="android:colorButtonNormal">@color/colorPrimary</item>
+
+    </style>
+
+    <style name="myBtn" parent="Widget.AppCompat.Button">
+        <item name="android:background">@drawable/btn_shape</item>
+        <item name="android:textColor">#fff</item>
+    </style>
+
+    <style name="edit_theme" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">@color/base</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"></style>
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
+    <style name="CustomActionBarStyle" parent="@android:style/Widget.DeviceDefault.Light.ActionBar">
+        <item name="android:contentInsetEnd">0dp</item><!--右边距为0-->
+        <item name="android:contentInsetStart">0dp</item><!--左边距为0-->
+    </style>
+
+</resources>

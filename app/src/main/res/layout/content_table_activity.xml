@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/time_layout"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.morho.mytest.TimetableActivity"
+    tools:showIn="@layout/activity_timetable"
+    android:fitsSystemWindows="true">
+
+    <LinearLayout
+        android:id="@+id/week_bar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:elevation="4dp"
+        android:background="@color/white"
+        android:paddingLeft="24dp"
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp">
+
+
+
+        <TextView
+
+            android:gravity="center"
+            android:id="@+id/span_Mon"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Mon" />
+
+        <TextView
+            android:id="@+id/span_Tue"
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Tue"
+            android:layout_weight="1"/>
+        <TextView
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Wed"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:gravity="center"
+            android:id="@+id/textView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Thu" />
+
+        <TextView
+            android:gravity="center"
+            android:id="@+id/textView2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Fri" />
+
+        <TextView
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Sat"
+            android:layout_weight="1"/>
+        <TextView
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Sun"
+            android:layout_weight="1"
+            />
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/scroll_timetable"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-1dp"
+        android:paddingBottom="30dp"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/week_bar">
+
+
+        <GridLayout
+            android:id="@+id/course_grid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="8"
+            android:minHeight="60dp"
+            android:rowCount="11">
+
+            <TextView
+                android:layout_width="24dp"
+                android:layout_height="60dp"
+                android:background="@color/grey_50"
+                android:gravity="center"
+                android:text="1" />
+
+            <TextView
+                android:layout_width="24dp"
+                android:layout_height="60dp"
+                android:layout_column="0"
+                android:layout_row="1"
+                android:gravity="center"
+                android:background="@color/white"
+                android:text="2" />
+
+            <TextView
+                android:layout_width="24dp"
+                android:layout_height="60dp"
+                android:layout_column="0"
+                android:layout_row="2"
+                android:background="@color/grey_50"
+                android:gravity="center"
+                android:text="3" />
+
+            <TextView
+                android:layout_width="24dp"
+                android:layout_height="60dp"
+                android:layout_column="0"
+                android:layout_row="3"
+                android:background="@color/white"
+                android:gravity="center"
+                android:text="4" />
+
+            <TextView
+                android:layout_width="24dp"
+                android:layout_height="60dp"
+                android:layout_column="0"
+                android:layout_row="4"
+                android:background="@color/grey_50"
+                android:gravity="center"
+                android:text="5" />
+
+            <TextView
+                android:layout_width="24dp"
+                android:layout_height="60dp"
+                android:layout_column="0"
+                android:layout_row="5"
+                android:background="@color/white"
+                android:gravity="center"
+                android:text="6" />
+
+            <TextView
+                android:layout_width="24dp"
+                android:layout_height="60dp"
+                android:layout_column="0"
+                android:layout_row="6"
+                android:background="@color/grey_50"
+                android:gravity="center"
+                android:text="7" />
+
+            <TextView
+                android:layout_width="24dp"
+                android:layout_height="60dp"
+                android:layout_column="0"
+                android:background="@color/white"
+                android:layout_row="7"
+                android:gravity="center"
+                android:text="8" />
+
+            <TextView
+                android:layout_width="24dp"
+                android:layout_height="60dp"
+                android:layout_column="0"
+                android:layout_row="8"
+                android:background="@color/grey_50"
+                android:gravity="center"
+                android:text="9" />
+
+            <TextView
+                android:layout_width="24dp"
+                android:layout_height="60dp"
+                android:background="@color/white"
+                android:layout_column="0"
+                android:layout_row="9"
+                android:gravity="center"
+                android:text="10" />
+
+            <TextView
+                android:layout_width="24dp"
+                android:layout_height="60dp"
+                android:layout_column="0"
+                android:layout_row="10"
+                android:background="@color/grey_50"
+                android:gravity="center"
+                android:text="11" />
+
+
+            <TextView
+                android:visibility="gone"
+                android:layout_width="46dp"
+                android:layout_height="118dp"
+                android:layout_column="1"
+                android:layout_marginBottom="2dp"
+                android:layout_marginRight="2dp"
+                android:layout_row="0"
+                android:layout_rowSpan="2"
+                android:background="@drawable/course_shape"
+                android:elevation="4dp"
+                android:gravity="center_horizontal"
+                android:text="Linux操作系统分析"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
+            <TextView
+                android:visibility="gone"
+                android:layout_width="46dp"
+                android:layout_height="118dp"
+                android:layout_column="1"
+                android:layout_marginBottom="2dp"
+                android:layout_marginRight="2dp"
+                android:layout_row="2"
+                android:layout_rowSpan="2"
+                android:background="@drawable/course_shape"
+                android:elevation="4dp"
+                android:gravity="center_horizontal"
+                android:text="大学生职业发展与就业指导@经管A103"
+                android:textColor="@color/white"
+
+                android:textSize="14sp" />
+
+        </GridLayout>
+
+
+    </ScrollView>
+
+
+</android.support.constraint.ConstraintLayout>

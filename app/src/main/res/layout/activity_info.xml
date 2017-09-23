@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.morho.mytest.InfoActivity">
+
+    <include layout="@layout/app_bar_ot"
+        android:id="@+id/info_toolbar"
+        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+
+    <android.support.constraint.ConstraintLayout
+        app:layout_constraintTop_toBottomOf="@id/info_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/info_my_img"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintLeft_toRightOf="parent"
+            android:layout_width="86dp"
+            android:layout_height="86dp"
+            android:src="@drawable/icon"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="26dp" />
+
+        <TextView
+            android:text="更换头像"
+            android:textColor="@color/colorPrimaryDark"
+            android:id="@+id/info_change"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/info_my_img"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintLeft_toRightOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="8dp"
+            android:clickable="true"/>
+
+        <ListView
+            android:layout_marginTop="18dp"
+            android:id="@+id/my_info_list"
+            app:layout_constraintTop_toBottomOf="@id/info_change"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintLeft_toRightOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@drawable/info_list_divider"
+            android:background="@drawable/list_view_background"
+            android:elevation="2dp">
+
+
+        </ListView>
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_marginTop="42dp"
+            app:layout_constraintTop_toBottomOf="@id/my_info_list"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintLeft_toRightOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <TextView
+                android:id="@+id/button_save"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:text="保存信息"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="48dp" />
+
+            <Button
+                android:onClick="do_logout"
+                android:layout_marginTop="18dp"
+                android:id="@+id/button_logout"
+                android:text="登出用户"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="48dp" />
+
+
+        </LinearLayout>
+
+
+
+    </android.support.constraint.ConstraintLayout>
+
+
+
+
+
+
+</android.support.constraint.ConstraintLayout>

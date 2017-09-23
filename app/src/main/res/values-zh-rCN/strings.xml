@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">校园助手</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_course">课程表</string>
+    <string name="nav_score">成绩</string>
+    <string name="nav_tools">小工具</string>
+    <string name="setting">设置</string>
+    <string name="nav_me">我的信息</string>
+    <string name="about">关于</string>
+    <string name="nav_lab">图书馆</string>
+    <string name="login_bar">用户登入</string>
+    <string name="btn_login">登入</string>
+    <string name="usr_hint">用户名</string>
+    <string name="pwd_hint">密码</string>
+    <string name="third_login">第三方账号快捷登入</string>
+    <string name="register">注册</string>
+    <string name="register_bar">用户注册</string>
+    <string name="re_pwd_hint">确认密码</string>
+    <string name="btn_register">注册</string>
+    <string name="usr_error">用户名已存在</string>
+
+    <string name="about_version">版本号</string>
+    <string name="about_update">检查更新</string>
+    <string name="about_suggestion">建议反馈</string>
+
+    <array name="list_about">
+        <item>版本号</item>
+        <item>检查更新</item>
+        <item>建议反馈</item>
+    </array>
+
+    <array name="list_coder">
+        <item>关注我们</item>
+        <item>关于开发者</item>
+    </array>
+
+    <string name="search_hint">搜索课程名称</string>
+    <string name="info_bar">我的信息</string>
+
+</resources>

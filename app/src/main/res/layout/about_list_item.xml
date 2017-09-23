@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="16dp"
+    android:layout_width="match_parent"
+    android:layout_height="48dp"
+    android:orientation="horizontal">
+
+    <ImageView
+
+        android:layout_gravity="center"
+        android:id="@+id/img_list"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginLeft="16dp"
+        android:src="@drawable/ic_feedback_black_24dp" />
+
+    <TextView
+        android:id="@+id/text_list"
+        android:textSize="18sp"
+        android:text="版本号"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceListItemSmall"
+        android:gravity="center_vertical"
+        android:paddingStart="32dp"
+        android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
+        android:minHeight="?android:attr/listPreferredItemHeightSmall"/>
+
+</LinearLayout>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/course_menu_select"
+        android:title="切换周数" />
+    <item android:actionLayout="@+id/course_menu_day"
+        android:title="选择日期"/>
+    <item   android:id="@+id/course_menu_term"
+        android:title="选择学期" />
+</menu>

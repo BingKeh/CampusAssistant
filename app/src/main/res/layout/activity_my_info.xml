@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.morho.mytest.My_infoActivity">
+
+    <include layout="@layout/app_bar_ot"
+        android:id="@+id/my_info_toolbar"
+        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <ScrollView
+        android:id="@+id/info_scroll"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="@+id/my_info_toolbar"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/my_info_toolbar"
+        app:layout_constraintVertical_bias="0.0">
+
+        <LinearLayout
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/linearLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:paddingTop="80dp"
+
+            android:orientation="vertical"
+
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp">
+
+            <android.support.design.widget.TextInputLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+                <EditText
+                    android:id="@+id/text_usr"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:ems="10"
+                    android:hint="学号"
+                    android:inputType="number"
+                    android:theme="@style/edit_theme" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp">
+
+                <EditText
+                    android:id="@+id/text_psd"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:ems="10"
+                    android:hint="密码"
+
+                    android:inputType="textPassword"
+                    android:theme="@style/edit_theme" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <LinearLayout
+                android:id="@+id/code_layout"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
+
+                <android.support.design.widget.TextInputLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2">
+
+                    <EditText
+                        android:id="@+id/text_code"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:hint="验证码"
+                        android:inputType="text"
+                        android:theme="@style/edit_theme" />
+
+
+                </android.support.design.widget.TextInputLayout>
+
+                <ImageButton
+                    android:id="@+id/img_btn_code"
+                    android:layout_width="72dp"
+                    android:layout_height="27dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="7dp"
+                    android:onClick="do_code"
+                    android:visibility="gone"/>
+
+                <ProgressBar
+                    android:id="@+id/progressBar_code"
+                    style="?android:attr/progressBarStyle"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="4dp"
+                    android:layout_weight="1"
+                    android:paddingLeft="-20dp"/>
+
+                <!--<Button-->
+                <!--android:id="@+id/button"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginLeft="10dp"-->
+                <!--android:layout_marginTop="6dp"-->
+                <!--android:layout_weight="1"-->
+                <!--android:text="验证码"-->
+                <!--android:textColor="@color/white" />-->
+
+            </LinearLayout>
+
+
+            <Button
+                android:id="@+id/btn_jwclogin"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="60dp"
+                android:layout_weight="1"
+                android:text="Get Info"
+                android:textColor="@color/white"
+                android:onClick="do_login_jwc"
+                android:visibility="visible"/>
+
+            <ProgressBar
+                android:layout_marginTop="60dp"
+                android:id="@+id/progressBar_wait"
+                style="?android:attr/progressBarStyle"
+                android:layout_gravity="center"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:visibility="gone"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+
+
+
+
+
+
+</android.support.constraint.ConstraintLayout>

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.morho.mytest.LoginActivity">
+
+    <include
+        android:id="@+id/login_toolbar"
+        layout="@layout/app_bar_ot"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <LinearLayout
+        android:id="@+id/login_layout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="80dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_toolbar">
+
+        <android.support.design.widget.TextInputLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/input_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/usr_text"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:ems="10"
+                android:hint="@string/usr_hint"
+                android:inputType="textPersonName"
+                android:theme="@style/edit_theme" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
+
+            <EditText
+                android:id="@+id/pwd_text"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:ems="10"
+                android:hint="@string/pwd_hint"
+                android:inputType="textPassword"
+                android:theme="@style/edit_theme" />
+        </android.support.design.widget.TextInputLayout>
+
+
+
+        <Button
+            android:id="@+id/login_btn"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="60dp"
+            android:text="@string/btn_login"
+            android:textColor="@color/white"
+            android:layout_weight="1"
+            android:onClick="do_login" />
+
+        <TextView
+            android:id="@+id/register_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/register"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginTop="5dp" />
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/login_layout"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="60dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/third_login" />
+
+        <ImageView
+            android:layout_marginTop="20dp"
+            android:layout_width="260dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"
+            android:background="@color/base" />
+
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/icon64_wx_logo"
+                android:layout_weight="1"
+                android:scaleType="centerInside"
+                android:onClick="do_test"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</android.support.constraint.ConstraintLayout>

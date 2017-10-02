@@ -129,7 +129,7 @@ public class CourseFragment extends Fragment {
                 gridView = gridLayout = new MyGridView(getContext(), t.getWidth());
                 System.out.println("The width is " + t.getWidth());
                 //GridLayout gridLayout = (GridLayout) content.findViewById(R.id.course_grid);
-                LayoutInflater layoutInflater = getLayoutInflater(savedInstanceState);
+                LayoutInflater layoutInflater = LayoutInflater.from(getContext());
                 TextView textView = (TextView) layoutInflater.inflate(R.layout.course_null_text, null);
                 float scale = getResources().getDisplayMetrics().density;
 

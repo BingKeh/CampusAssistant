@@ -255,14 +255,10 @@ public class MainActivity extends AppCompatActivity
                 }
                 return true;
             case R.id.nav_about:
-//                Menu menu = new MenuBuilder(this);
-//                MenuInflater inflater = getMenuInflater();
-//                inflater.inflate(R.menu.course_menu, menu);
-//                onCreateOptionsMenu(menu);
-                do_about();
+                //do_about();
 
-                //menu.add("Test");
-                //do_setting(findViewById(id));
+                Intent intent = new Intent(this, ToolsActivity.class);
+                startActivity(intent);
                 return true;
             case R.id.nav_lab: {
 //                ScoredbHelper scoredbHelper = new ScoredbHelper(this);

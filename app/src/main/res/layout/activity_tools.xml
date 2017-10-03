@@ -7,10 +7,17 @@
     android:layout_height="match_parent"
     tools:context="com.example.morho.mytest.ToolsActivity">
 
+    <include layout="@layout/app_bar_ot"
+        android:id="@+id/tools_toolbar"
+        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <GridLayout
         android:id="@+id/tools_grid"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="48dp"
+        app:layout_constraintTop_toBottomOf="@id/tools_toolbar"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_width="match_parent"
@@ -21,6 +28,14 @@
         android:rowCount="3">
 
 
-
     </GridLayout>
+
+    <FrameLayout
+        android:id="@+id/lost_frag"
+        app:layout_constraintTop_toBottomOf="@id/tools_grid"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </FrameLayout>
 </android.support.constraint.ConstraintLayout>

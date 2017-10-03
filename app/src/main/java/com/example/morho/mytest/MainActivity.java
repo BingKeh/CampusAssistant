@@ -135,7 +135,7 @@ public class MainActivity extends AppCompatActivity
 
         if (fragmentStatus[0] == 0) {
             courseFragment = new CourseFragment();
-            fragment[2] = courseFragment;
+            fragment[0] = courseFragment;
             transaction.add(R.id.Main_Fragment, courseFragment);
         }
         checkFragment(courseFragment, transaction);
@@ -192,29 +192,17 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         System.out.println("clicked!");
-
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction transaction = fm.beginTransaction();
         switch (id) {
+
             case R.id.nav_course: {
                 if (!isCourseMenu) {
                     MenuInflater inflater = getMenuInflater();
                     inflater.inflate(R.menu.course_menu, this.menu_course);
                     this.isCourseMenu = true;
                 }
-                if (fragment[3] != null && fragment[3] == courseFragment) {
-                    ;
-                } else {
-                    FragmentManager fm = getSupportFragmentManager();
-                    FragmentTransaction transaction = fm.beginTransaction();
-                    if (fragmentStatus[0] == 0) {
-                        courseFragment = new CourseFragment();
-                        fragment[0] = courseFragment;
-                        transaction.add(R.id.Main_Fragment, courseFragment);
-                    }
-                    checkFragment(courseFragment, transaction);
-                    transaction.commit();
-                    fragment[3] = courseFragment;
-                }
-
+                changeFragment(transaction, 0);
                 if (drawer.isDrawerOpen(GravityCompat.START)) {
                     drawer.closeDrawer(GravityCompat.START);
                 }
@@ -225,21 +213,7 @@ public class MainActivity extends AppCompatActivity
                     this.menu_course.clear();
                     isCourseMenu = false;
                 }
-                if (fragment[3] != null && fragment[3] == toolsFragment) {
-                    ;
-                } else {
-                    FragmentManager fm = getSupportFragmentManager();
-                    FragmentTransaction transaction = fm.beginTransaction();
-                    if (fragmentStatus[2] == 0) {
-                        toolsFragment = new ToolsFragment();
-                        fragment[2] = toolsFragment;
-                        transaction.add(R.id.Main_Fragment, toolsFragment);
-                    }
-                    checkFragment(toolsFragment, transaction);
-                    transaction.commit();
-                    fragment[3] = toolsFragment;
-                }
-
+                changeFragment(transaction, 2);
                 if (drawer.isDrawerOpen(GravityCompat.START)) {
                     drawer.closeDrawer(GravityCompat.START);
                 }
@@ -255,20 +229,11 @@ public class MainActivity extends AppCompatActivity
                 }
                 return true;
             case R.id.nav_about:
-                //do_about();
 
                 Intent intent = new Intent(this, ToolsActivity.class);
                 startActivity(intent);
                 return true;
             case R.id.nav_lab: {
-//                ScoredbHelper scoredbHelper = new ScoredbHelper(this);
-//                List<CourseItem> list = Coursedb.get_cs_list(scoredbHelper.getReadableDatabase());
-//                System.out.println( list + "The size of list is " + list.size());
-
-//                Intent intent = new Intent(this, TimetableActivity.class);
-//                intent.putExtra("SAMPLE_MESSAGE", "test message");
-//                startActivity(intent);
-
                 if (isCourseMenu) {
                     this.menu_course.clear();
                     isCourseMenu = false;
@@ -277,21 +242,7 @@ public class MainActivity extends AppCompatActivity
                 MenuInflater inflater = getMenuInflater();
                 inflater.inflate(R.menu.score_menu, this.menu_course);
                 this.isCourseMenu = true;
-
-                if (fragment[3] != null && fragment[3] == scoreFragment) {
-                    ;
-                } else {
-                    FragmentManager fm = getSupportFragmentManager();
-                    FragmentTransaction transaction = fm.beginTransaction();
-                    if (fragmentStatus[2] == 0) {
-                        scoreFragment = new ScoreFragment();
-                        fragment[2] = scoreFragment;
-                        transaction.add(R.id.Main_Fragment, scoreFragment);
-                    }
-                    checkFragment(scoreFragment, transaction);
-                    transaction.commit();
-                    fragment[3] = scoreFragment;
-                }
+                changeFragment(transaction, 1);
 
                 if (drawer.isDrawerOpen(GravityCompat.START)) {
                     drawer.closeDrawer(GravityCompat.START);
@@ -299,7 +250,6 @@ public class MainActivity extends AppCompatActivity
                 break;
             }
         }
-
         return true;
     }
 
@@ -476,29 +426,12 @@ public class MainActivity extends AppCompatActivity
 
     public void onListFragmentInteraction() {
         System.out.println("ToolFragment Interface Method!");
-//        LayoutInflater inflater = getLayoutInflater();
-//        View view = inflater.inflate(R.layout.search_expand, null);
-//        main_layout.addView(view);
-        //toolbar_backup.setVisibility(Toolbar.VISIBLE);
-//        toolbar.setVisibility(Toolbar.GONE);
-//        search_box.setVisibility(View.VISIBLE);
-//        getSupportActionBar().setTitle("");
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        getSupportActionBar().setHomeButtonEnabled(true);
-//        getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.color.white));
-//        getSupportActionBar().setCustomView(R.layout.search_expand);
-//        getSupportActionBar().setDisplayOptions(android.support.v7.app.ActionBar.DISPLAY_SHOW_CUSTOM);
-//        getSupportActionBar().setDisplayShowCustomEnabled(true);
-//        ImageButton button = (ImageButton) toolbar.findViewById(R.id.search_back_button);
-//        button.setOnClickListener(this);
-//        ImageView close = (ImageView) toolbar.findViewById(R.id.search_close_button);
-//        close.setOnClickListener(this);
 
     }
 
     public void checkFragment(android.support.v4.app.Fragment fragment, FragmentTransaction transaction) {
         for (android.support.v4.app.Fragment f : this.fragment) {
-            if (f== null || f.getClass().equals(fragment.getClass())) {
+            if (f == null || f.getClass().equals(fragment.getClass())) {
                 continue;
             }
             transaction.hide(f);
@@ -539,6 +472,31 @@ public class MainActivity extends AppCompatActivity
         getSupportActionBar().setTitle("课程表(第" + week + "周)");
         this.courseFragment.do_week_changed(week);
     }
+
+    private void changeFragment(FragmentTransaction transaction, int index) {
+        if (this.fragment[3] != null && this.fragment[3] == this.fragment[index]) {
+            ;
+        } else {
+            if (fragmentStatus[index] == 0) {
+                switch(index) {
+                    case 0:
+                        this.fragment[index] = new CourseFragment();
+                        break;
+                    case 1:
+                        this.fragment[index] = new ScoreFragment();
+                        break;
+                    case 2:
+                        this.fragment[index] = new ToolsFragment();
+                }
+                transaction.add(R.id.Main_Fragment, this.fragment[index]);
+                fragmentStatus[index] = 1;
+            }
+            checkFragment(this.fragment[index], transaction);
+            transaction.commit();
+            this.fragment[3] = this.fragment[index];
+        }
+    }
+
 
     private class SearchWatcher implements TextWatcher {
 

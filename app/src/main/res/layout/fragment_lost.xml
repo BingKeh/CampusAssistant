@@ -1,0 +1,155 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.morho.mytest.LostFragment">
+
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.example.morho.mytest.LostActivity">
+
+
+        <LinearLayout
+            android:layout_marginTop="24dp"
+            android:id="@+id/lost_content"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toRightOf="parent" >
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center_horizontal"
+                android:weightSum="4">
+
+                <TextView
+                    android:id="@+id/lost_name"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="8pt"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:text="名称"/>
+
+                <EditText
+                    android:id="@+id/text_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"/>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_marginTop="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center_horizontal">
+
+                <TextView
+                    android:id="@+id/lost_cate"
+                    android:layout_width="44dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="挂失类别"
+                    android:textSize="8pt" />
+
+                <Spinner
+                    android:id="@+id/spinner"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/lost_cate" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center_horizontal"
+                android:weightSum="4">
+
+                <TextView
+                    android:id="@+id/lost_location"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="8pt"
+                    android:text="丢失地点"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"/>
+
+                <EditText
+                    android:id="@+id/text_location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"/>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center_horizontal">
+
+                <TextView
+                    android:id="@+id/lost_ot"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="8pt"
+                    android:layout_gravity="center"
+                    android:gravity="center_horizontal"
+                    android:text="备注"
+                    android:layout_weight="4"/>
+
+                <EditText
+
+                    android:id="@+id/text_ot"
+                    android:inputType="textMultiLine"
+                    android:maxLines="4"
+                    android:minLines="4"
+                    android:scrollbars="vertical"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="top"
+                    android:layout_weight="7"
+                    android:background="@drawable/textarea_shape"/>
+
+
+            </LinearLayout>
+
+            <Button
+                android:layout_marginTop="24dp"
+                android:id="@+id/lost_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="提交"
+                android:textColor="@color/white"
+                android:layout_gravity="center_horizontal"/>
+
+
+
+
+
+
+
+
+
+
+        </LinearLayout>
+    </android.support.constraint.ConstraintLayout>
+
+</FrameLayout>

@@ -89,6 +89,7 @@ public class MainActivity extends AppCompatActivity
     private long mExitTime;
     private Menu menu_score, menu_course;
     private boolean isCourseMenu = false;
+    private boolean isScoreMenu = false;
 
 
 
@@ -124,7 +125,6 @@ public class MainActivity extends AppCompatActivity
         this.search_view = (EditText) findViewById(R.id.search_view);
         init_user();
         init_fragment();
-        //this.test_text = (TextView) this.findViewById(R.id.test_text);
         //showtest();
     }
 
@@ -141,6 +141,7 @@ public class MainActivity extends AppCompatActivity
         checkFragment(courseFragment, transaction);
         transaction.commit();
         fragment[3] = courseFragment;
+
     }
 
     private void init_user() {
@@ -197,6 +198,9 @@ public class MainActivity extends AppCompatActivity
         switch (id) {
 
             case R.id.nav_course: {
+                if (isScoreMenu) {
+                    this.menu_course.clear();
+                }
                 if (!isCourseMenu) {
                     MenuInflater inflater = getMenuInflater();
                     inflater.inflate(R.menu.course_menu, this.menu_course);
@@ -209,7 +213,7 @@ public class MainActivity extends AppCompatActivity
                 break;
             }
             case R.id.nav_tools: {
-                if (isCourseMenu) {
+                if (isCourseMenu || isScoreMenu) {
                     this.menu_course.clear();
                     isCourseMenu = false;
                 }
@@ -241,7 +245,7 @@ public class MainActivity extends AppCompatActivity
 
                 MenuInflater inflater = getMenuInflater();
                 inflater.inflate(R.menu.score_menu, this.menu_course);
-                this.isCourseMenu = true;
+                this.isScoreMenu = true;
                 changeFragment(transaction, 1);
 
                 if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -258,6 +262,11 @@ public class MainActivity extends AppCompatActivity
         //MenuInflater inflater = getMenuInflater();
         //inflater.inflate(score_menu, menu);
         this.menu_course = menu;
+        if (!isCourseMenu) {
+            MenuInflater inflater = getMenuInflater();
+            inflater.inflate(R.menu.course_menu, this.menu_course);
+            this.isCourseMenu = true;
+        }
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -484,6 +493,7 @@ public class MainActivity extends AppCompatActivity
                         break;
                     case 1:
                         this.fragment[index] = new ScoreFragment();
+                        this.scoreFragment = (ScoreFragment) this.fragment[index];
                         break;
                     case 2:
                         this.fragment[index] = new ToolsFragment();

@@ -1,25 +1,15 @@
 package com.example.morho.mytest;
 
 import android.animation.Animator;
-import android.app.ActionBar;
-import android.app.Fragment;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.content.res.AssetManager;
-import android.content.res.Resources;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.net.Uri;
-import android.provider.ContactsContract;
-import android.provider.Settings;
 import android.support.annotation.NonNull;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -27,44 +17,31 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.view.menu.MenuBuilder;
-import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.transition.Transition;
-import android.view.DragEvent;
-import android.view.LayoutInflater;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewAnimationUtils;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
-import com.example.morho.mytest.dummy.DummyContent;
-
-import org.w3c.dom.Text;
-
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.util.List;
-
-import static com.example.morho.mytest.R.menu.course_menu;
-import static com.example.morho.mytest.R.menu.score_menu;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, ToolsFragment.OnListFragmentInteractionListener,
+        implements NavigationView.OnNavigationItemSelectedListener, NewsFragment.OnListFragmentInteractionListener,
         View.OnClickListener, CourseFragment.OnCourseFragmentInteractionListener, WeekSelectDialogFragment.postWeekChanged {
 
     private DrawerLayout drawer;
@@ -76,12 +53,12 @@ public class MainActivity extends AppCompatActivity
     private TextView test_text;
     public static final String ACTION = "broadcast.action";
     public static final String ACT_CLOSE_DRAWER = "CLOSE_DRAWER";
-    private ToolsFragment toolsFragment;
+    private NewsFragment newsFragment;
     private ScoreFragment scoreFragment;
     private CourseFragment courseFragment;
     private ImageView img;
-    private int[] fragmentStatus = { 0, 0, 0};
-    private android.support.v4.app.Fragment fragment[] = new android.support.v4.app.Fragment[4];
+    private int[] fragmentStatus = { 0, 0, 0, 0};
+    private android.support.v4.app.Fragment fragment[] = new android.support.v4.app.Fragment[5];
     private LinearLayout search_box;
     private Toolbar toolbar;
     private boolean isSearch, isExsiting;
@@ -140,7 +117,7 @@ public class MainActivity extends AppCompatActivity
         }
         checkFragment(courseFragment, transaction);
         transaction.commit();
-        fragment[3] = courseFragment;
+        fragment[4] = courseFragment;
 
     }
 
@@ -212,16 +189,50 @@ public class MainActivity extends AppCompatActivity
                 }
                 break;
             }
-            case R.id.nav_tools: {
+
+            case R.id.nav_lab: {
+                if (isCourseMenu) {
+                    this.menu_course.clear();
+                    isCourseMenu = false;
+                }
+
+                MenuInflater inflater = getMenuInflater();
+                inflater.inflate(R.menu.score_menu, this.menu_course);
+                this.isScoreMenu = true;
+                changeFragment(transaction, 1);
+                if (drawer.isDrawerOpen(GravityCompat.START)) {
+                    drawer.closeDrawer(GravityCompat.START);
+                }
+                break;
+            }
+
+
+            case R.id.nav_news: {
                 if (isCourseMenu || isScoreMenu) {
                     this.menu_course.clear();
                     isCourseMenu = false;
                 }
                 changeFragment(transaction, 2);
+
                 if (drawer.isDrawerOpen(GravityCompat.START)) {
                     drawer.closeDrawer(GravityCompat.START);
                 }
                 break;
+            }
+
+
+            case R.id.nav_tools: {
+                if (isCourseMenu || isScoreMenu) {
+                    this.menu_course.clear();
+                    isCourseMenu = false;
+                }
+                changeFragment(transaction, 3);
+
+                if (drawer.isDrawerOpen(GravityCompat.START)) {
+                    drawer.closeDrawer(GravityCompat.START);
+                }
+                break;
+
             }
             case R.id.nav_me:
                 if (is_logged) {
@@ -234,25 +245,11 @@ public class MainActivity extends AppCompatActivity
                 return true;
             case R.id.nav_about:
 
-                Intent intent = new Intent(this, ToolsActivity.class);
+                Intent intent = new Intent(this, AboutActivity.class);
                 startActivity(intent);
                 return true;
-            case R.id.nav_lab: {
-                if (isCourseMenu) {
-                    this.menu_course.clear();
-                    isCourseMenu = false;
-                }
 
-                MenuInflater inflater = getMenuInflater();
-                inflater.inflate(R.menu.score_menu, this.menu_course);
-                this.isScoreMenu = true;
-                changeFragment(transaction, 1);
 
-                if (drawer.isDrawerOpen(GravityCompat.START)) {
-                    drawer.closeDrawer(GravityCompat.START);
-                }
-                break;
-            }
         }
         return true;
     }
@@ -472,7 +469,22 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onFragmentInteraction(Uri uri) {
-
+        try {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = simpleDateFormat.parse("2017-09-04");
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(new Date());
+            calendar.setFirstDayOfWeek(Calendar.MONDAY);
+            int nowWeek = calendar.get(Calendar.WEEK_OF_YEAR);
+            calendar.setTime(date);
+            int startWeek = calendar.get(Calendar.WEEK_OF_YEAR);
+            Log.e("weeks count", "Now is " + nowWeek + " and start is " + startWeek);
+            int week = nowWeek - startWeek + 1;
+            getSupportActionBar().setTitle("课程表(第" + week + "周)");
+            Log.e("interface invoke", "invoked!");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -483,7 +495,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void changeFragment(FragmentTransaction transaction, int index) {
-        if (this.fragment[3] != null && this.fragment[3] == this.fragment[index]) {
+        if (this.fragment[4] != null && this.fragment[4] == this.fragment[index]) {
             ;
         } else {
             if (fragmentStatus[index] == 0) {
@@ -496,14 +508,21 @@ public class MainActivity extends AppCompatActivity
                         this.scoreFragment = (ScoreFragment) this.fragment[index];
                         break;
                     case 2:
-                        this.fragment[index] = new ToolsFragment();
+                        this.fragment[index] = new NewsFragment();
+                        this.newsFragment = (NewsFragment) this.fragment[index];
+                        break;
+                    case 3:
+                        this.fragment[index] = new ToolFragment();
+                        break;
                 }
                 transaction.add(R.id.Main_Fragment, this.fragment[index]);
                 fragmentStatus[index] = 1;
+            } else if (index == 2) {
+                this.newsFragment.isRefreshing(true);
             }
             checkFragment(this.fragment[index], transaction);
             transaction.commit();
-            this.fragment[3] = this.fragment[index];
+            this.fragment[4] = this.fragment[index];
         }
     }
 

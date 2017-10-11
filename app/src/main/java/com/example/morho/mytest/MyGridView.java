@@ -44,7 +44,7 @@ public class MyGridView extends GridLayout {
 
         for (int i = 0; i <= 6; i++) {
             //canvas.drawLine(MyTool.dip2px(24 + 48 * i, scale), 0, MyTool.dip2px(24 + 48 * i, scale), 3000, paint);
-            Log.e("MyGridView CLASS", "i get width " + width);
+            //Log.e("MyGridView CLASS", "i get width " + width);
             canvas.drawLine(MyTool.dip2px(24 , scale) + width * i, 0, MyTool.dip2px(24 , scale) + width * i, 3000, paint);
 
         }

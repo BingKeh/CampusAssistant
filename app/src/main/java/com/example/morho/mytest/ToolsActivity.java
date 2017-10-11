@@ -114,4 +114,6 @@ public class ToolsActivity extends AppCompatActivity implements View.OnClickList
         transaction.show(this.fragmentNow);
     }
 
+
+
 }

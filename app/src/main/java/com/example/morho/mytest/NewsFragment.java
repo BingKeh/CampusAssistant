@@ -1,24 +1,28 @@
 package com.example.morho.mytest;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
-import android.content.res.TypedArray;
 import android.graphics.Rect;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.morho.mytest.dummy.DummyContent;
-import com.example.morho.mytest.dummy.DummyContent.DummyItem;
-
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -27,7 +31,7 @@ import java.util.List;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class ToolsFragment extends Fragment {
+public class NewsFragment extends Fragment implements lost_item_Adapter.onItemClickListener, SwipeRefreshLayout.OnRefreshListener{
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -35,6 +39,9 @@ public class ToolsFragment extends Fragment {
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
     private List<Lost_Item_Entity> list;
+    private lost_item_Adapter adapter;
+    private SwipeRefreshLayout refreshLayout;
+    RecyclerView recyclerView;
     private int[] bg_array = new int[] {
             R.drawable.bg,
             R.drawable.bg1,
@@ -48,14 +55,14 @@ public class ToolsFragment extends Fragment {
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public ToolsFragment() {
+    public NewsFragment() {
 
     }
 
     // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
-    public static ToolsFragment newInstance(int columnCount) {
-        ToolsFragment fragment = new ToolsFragment();
+    public static NewsFragment newInstance(int columnCount) {
+        NewsFragment fragment = new NewsFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
         fragment.setArguments(args);
@@ -75,12 +82,14 @@ public class ToolsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_tools_list, container, false);
-
+        View list_view = view.findViewById(R.id.list);
+        refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh_list);
+        new lost_net().execute("");
         // Set the adapter
-        if (view instanceof RecyclerView) {
+        if (list_view instanceof RecyclerView) {
             Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getContext(), 2);
+            recyclerView = (RecyclerView) list_view;
+            RecyclerView.LayoutManager mLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
             recyclerView.setLayoutManager(mLayoutManager);
             recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
             recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -90,16 +99,21 @@ public class ToolsFragment extends Fragment {
 //                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
 //            }
             list = new ArrayList<>();
-            for (int i = 0; i < 20; i++) {
-                Lost_Item_Entity data = new Lost_Item_Entity();
-                data.initDefaultData();
-                data.setImg(bg_array[i % 6]);
-                list.add(data);
-            }
-            recyclerView.setAdapter(new lost_item_Adapter(getContext() ,list));
+//            for (int i = 0; i < 1; i++) {
+//                Lost_Item_Entity data = new Lost_Item_Entity();
+//                data.initDefaultData(i);
+//                data.setImg(bg_array[i % 6]);
+//                list.add(data);
+//            }
+            lost_item_Adapter adapter = new lost_item_Adapter(getContext() ,list);
+            this.adapter = adapter;
+            adapter.setOnClickListener(this);
+            recyclerView.setAdapter(adapter);
         }
         setHasOptionsMenu(false);
+        refreshLayout.setOnRefreshListener(this);
         System.out.println("tools fragment created!");
+
         return view;
     }
 
@@ -123,6 +137,58 @@ public class ToolsFragment extends Fragment {
         mListener = null;
     }
 
+    @Override
+    public void onClick(View view, int position) {
+        Log.e("Recycle View test", "view " + position + " clicked!");
+        Intent intent = new Intent(this.getContext(), LostDetailActivity.class);
+        intent.putExtra("IMG_VALUE", bg_array[position % 6]);
+        String transitionName = getString(R.string.lost_img_transition);
+        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this.getActivity(), view.findViewById(R.id.card_img), transitionName);
+        ActivityCompat.startActivity(this.getContext(), intent, options.toBundle());
+    }
+
+    @Override
+    public void onLongClick(View view, int position) {
+        Log.e("Recycle View test", "view " + position + " long clicked!");
+        adapter.removeItem(position);
+    }
+
+    public void onPostGet(List<HashMap<String, String>> list) {
+        List<Lost_Item_Entity> item_list = this.adapter.getList();
+        Log.e("lost list info", list + "");
+        Log.e("lost item list info", item_list + "");
+        for (int i = 0; i < list.size(); i++) {
+            HashMap<String, String> data = list.get(i);
+            String context = data.get("ps");
+            Lost_Item_Entity entity = new Lost_Item_Entity();
+            entity.initDefaultData(i);
+            entity.setContext(context);
+            entity.setImg(bg_array[i % 6]);
+            entity.setTitle(data.get("title"));
+            adapter.addItem(adapter.getItemCount(), entity);
+        }
+        this.refreshLayout.setRefreshing(false);
+    }
+
+    public void doRefresh() {
+        Log.e("newsFragment info", "do refreshing!");
+        this.adapter.resetList();
+        new lost_net().execute("");
+    }
+
+    @Override
+    public void onRefresh() {
+        doRefresh();
+    }
+
+    public void isRefreshing(boolean Refreshing) {
+        if (Refreshing) {
+            this.refreshLayout.setRefreshing(true);
+            doRefresh();
+        }
+    }
+
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -136,6 +202,28 @@ public class ToolsFragment extends Fragment {
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
         void onListFragmentInteraction();
+    }
+
+    private class lost_net extends AsyncTask<String, Integer, List<HashMap<String, String>>> {
+
+        @Override
+        protected void onPostExecute(List<HashMap<String, String>> hashMaps) {
+            onPostGet(hashMaps);
+        }
+
+        @Override
+        protected List<HashMap<String, String>> doInBackground(String... strings) {
+            List<HashMap<String, String>> lost_list = null;
+            try {
+                lost_list = new NetTool().get_lost_list();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            if (lost_list != null) {
+                return lost_list;
+            }
+            return null;
+        }
     }
 
 

@@ -3,8 +3,10 @@ package com.example.morho.mytest;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -454,7 +456,51 @@ public class NetTool{
             return true;
         }
         return false;
+    }
 
+    public boolean do_upload_lost(String... params) throws IOException {
+        String usr = params[0];
+        String title = params[1];
+        String cate = params[3];
+        String location = params[2];
+        String ot = params[4];
+        FormBody formBody = new FormBody.Builder()
+                .add("action", "DO_LOST_UPLOAD")
+                .add("usr", usr)
+                .add("title", title)
+                .add("cate", cate)
+                .add("location", location)
+                .add("ot", ot)
+                .build();
+        Request request = new Request.Builder()
+                .url("http://115.159.216.38/app/do_action")
+                .post(formBody)
+                .build();
+        Response response = httpclient.newCall(request).execute();
+        String source = response.body().string();
+        HashMap<String, Object> ret = new HashMap<>();
+        ret = new Gson().fromJson(source, ret.getClass());
+        Log.e("do lost upload result", "the result is " + ret.get("Result").toString());
+        return false;
+    }
+
+
+    public List<HashMap<String, String>> get_lost_list(String... params) throws IOException {
+        FormBody formBody = new FormBody.Builder()
+                .add("action", "DO_GET_LOST")
+                .build();
+        Request request = new Request.Builder()
+                .url("http://115.159.216.38/app/do_action")
+                .post(formBody)
+                .build();
+        Response response = httpclient.newCall(request).execute();
+        String source = response.body().string();
+        if (source != null) {
+            List<HashMap<String, String>> list = new ArrayList<>();
+            list = new Gson().fromJson(source, new TypeToken<List<HashMap<String, String>>>(){}.getType());
+            return list;
+        }
+        return null;
     }
 
 

@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.morho.mytest.ToolsFragment.OnListFragmentInteractionListener;
+import com.example.morho.mytest.NewsFragment.OnListFragmentInteractionListener;
 import com.example.morho.mytest.dummy.DummyContent.DummyItem;
 
 import java.util.List;

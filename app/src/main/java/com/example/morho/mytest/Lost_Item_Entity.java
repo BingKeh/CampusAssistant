@@ -19,9 +19,9 @@ public class Lost_Item_Entity {
 
 
 
-    public void initDefaultData() {
+    public void initDefaultData(int index) {
         this.lost_type = 1;
-        this.Title = "失物招领";
+        this.Title = "失物招领 " + index;
         this.context = "校园卡  掉落地点：图书馆   学号： 202140916";
         this.usr_id = 202140904;
         this.data = getData();

@@ -25,6 +25,9 @@
     <string name="about_update">检查更新</string>
     <string name="about_suggestion">建议反馈</string>
 
+    <string name="nav_news">动态</string>
+
+
     <array name="list_about">
         <item>版本号</item>
         <item>检查更新</item>

@@ -13,6 +13,7 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -208,15 +209,14 @@ public class CourseFragment extends Fragment {
                 try {
                     date  = simpleDateFormat.parse("2017-09-04");
                     term_date = date;
-                    init_course(myList, date, gridView, t);
-
+                    getWeekCourse(new Date(), true);
+                    mListener.onFragmentInteraction(null);
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
 
             }
         });
-
         return content;
     }
 
@@ -237,6 +237,7 @@ public class CourseFragment extends Fragment {
             throw new RuntimeException(context.toString()
                     + " must implement OnCourseFragmentInteractionListener");
         }
+
     }
 
     @Override
@@ -258,10 +259,12 @@ public class CourseFragment extends Fragment {
     public interface OnCourseFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+
     }
 
     private void init_course(List<CourseItem> list, Date date, GridLayout gridLayout, View t) throws ParseException {
         List<CourseItem> list_ret = CourseItem.getCourseThisWeek(list, date);
+        this.list = list_ret;
         System.out.println(list_ret);
         addCourse(list_ret, gridLayout, t);
     }
@@ -272,7 +275,6 @@ public class CourseFragment extends Fragment {
         TypedArray typedArray = getResources().obtainTypedArray(R.array.course_shape);
         int i = 0;
         for (CourseItem courseItem : list) {
-
             int rowIndex = courseItem.getTurns_begin() - 1;
             int columnIndex = courseItem.getDay_of_week() - 1;
             if (columnIndex == 0) { columnIndex = 7; }
@@ -292,6 +294,7 @@ public class CourseFragment extends Fragment {
             new_course.setBackground(typedArray.getDrawable(i % 5));
             new_course.setTag(courseItem);
             textViews[i] = new_course;
+
             gridLayout.addView(new_course, params);
             i++;
 
@@ -304,9 +307,14 @@ public class CourseFragment extends Fragment {
         }
     }
 
-    public void getWeekCourse(Date date) throws ParseException {
-        for (TextView textView : this.textViews) {
-            this.gridLayout.removeView(textView);
+    public void getWeekCourse(Date date, boolean isNew) throws ParseException {
+        if (!isNew) {
+            for (TextView textView : this.textViews) {
+                this.gridLayout.removeView(textView);
+            }
+            Log.e("textViews info", "it's not a new view");
+        } else {
+            Log.e("textViews info", "it's  a new view");
         }
         init_course(this.list, date, this.gridLayout, this.week_span);
     }
@@ -318,9 +326,18 @@ public class CourseFragment extends Fragment {
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(date);
             calendar.set(calendar.WEEK_OF_YEAR, calendar.get(calendar.WEEK_OF_YEAR) + week - 1);
-            getWeekCourse(calendar.getTime());
+            getWeekCourse(calendar.getTime(), false);
         } catch (ParseException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void onResume() {
+
+        Log.e("textViews info", "start debug!");
+
+        super.onResume();
+
     }
 }

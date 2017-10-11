@@ -104,6 +104,7 @@ public class ScoreFragment extends Fragment implements ListView.OnItemClickListe
         listView.requestFocus();
         //listView.setOnItemClickListener(this);
         //myScoreAdapter.notifyDataSetChanged();
+
         return view;
     }
 

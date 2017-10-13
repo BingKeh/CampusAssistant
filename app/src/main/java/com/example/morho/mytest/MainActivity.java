@@ -516,6 +516,7 @@ public class MainActivity extends AppCompatActivity
                         break;
                 }
                 transaction.add(R.id.Main_Fragment, this.fragment[index]);
+
                 fragmentStatus[index] = 1;
             } else if (index == 2) {
                 this.newsFragment.isRefreshing(true);

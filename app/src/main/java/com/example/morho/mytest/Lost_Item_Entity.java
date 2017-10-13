@@ -2,19 +2,21 @@ package com.example.morho.mytest;
 
 import android.graphics.drawable.Drawable;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by Morho on 8/13/2017.
  */
 
-public class Lost_Item_Entity {
+public class Lost_Item_Entity implements Serializable{
     private int lost_type;
     private String Title;
     private String context;
     private int usr_id;
     private Date data;
     private int img;
+    private String usr_name;
 
 
 
@@ -73,5 +75,13 @@ public class Lost_Item_Entity {
 
     public void setImg(int img) {
         this.img = img;
+    }
+
+    public String getUsr_name() {
+        return usr_name;
+    }
+
+    public void setUsr_name(String usr_name) {
+        this.usr_name = usr_name;
     }
 }

@@ -52,7 +52,11 @@
             android:theme="@style/AppTheme" />
         <activity android:name=".ToolsActivity" />
         <activity android:name=".LostActivity" />
-        <activity android:name=".LostDetailActivity"></activity>
+        <activity android:name=".LostDetailActivity" />
+        <activity
+            android:name=".LostHistoryActivity"
+            android:label="@string/title_activity_lost_history"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

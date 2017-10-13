@@ -36,6 +36,7 @@
                 android:textColor="@color/grey_50"
                 android:text="失物招领"
                 android:gravity="left"
+                android:visibility="gone"
                 />
         </RelativeLayout>
 

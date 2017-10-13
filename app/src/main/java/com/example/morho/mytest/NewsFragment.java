@@ -143,6 +143,7 @@ public class NewsFragment extends Fragment implements lost_item_Adapter.onItemCl
         Intent intent = new Intent(this.getContext(), LostDetailActivity.class);
         intent.putExtra("IMG_VALUE", bg_array[position % 6]);
         String transitionName = getString(R.string.lost_img_transition);
+        intent.putExtra("data", this.adapter.getList().get(position));
         ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this.getActivity(), view.findViewById(R.id.card_img), transitionName);
         ActivityCompat.startActivity(this.getContext(), intent, options.toBundle());
     }
@@ -165,6 +166,7 @@ public class NewsFragment extends Fragment implements lost_item_Adapter.onItemCl
             entity.setContext(context);
             entity.setImg(bg_array[i % 6]);
             entity.setTitle(data.get("title"));
+            entity.setUsr_name(data.get("user_name"));
             adapter.addItem(adapter.getItemCount(), entity);
         }
         this.refreshLayout.setRefreshing(false);

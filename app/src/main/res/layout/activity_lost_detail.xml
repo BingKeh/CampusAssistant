@@ -5,18 +5,62 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.morho.mytest.LostDetailActivity">
+    <include layout="@layout/app_bar_ot"
+        android:id="@+id/lost_item_toolbar"
+        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
     <LinearLayout
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="48dp"
+        app:layout_constraintTop_toBottomOf="@id/lost_item_toolbar"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
         <ImageView
             android:id="@+id/lost_img"
             android:layout_width="match_parent"
-            android:layout_height="120dp"
+            android:layout_height="180dp"
             android:src="@drawable/bg2"
             android:scaleType="center"
             android:transitionName="@string/lost_img_transition"/>
+
+        <TextView
+            android:id="@+id/lost_title"
+            android:layout_width="match_parent"
+            android:paddingTop="8dp"
+            android:paddingLeft="18dp"
+            android:paddingRight="18dp"
+            android:gravity="left"
+            android:textColor="@color/black"
+            android:text="用户:"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="6dp"/>
+
+        <TextView
+            android:id="@+id/news_content"
+            android:layout_width="match_parent"
+            android:paddingTop="8dp"
+            android:paddingLeft="18dp"
+            android:paddingRight="18dp"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:text="校园卡  掉落地点：图书馆   学号： 202140916"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_marginTop="24dp"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="确定"
+            android:onClick="do_ok"/>
+
+
     </LinearLayout>
 
 

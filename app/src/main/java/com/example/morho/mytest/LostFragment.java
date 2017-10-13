@@ -1,6 +1,7 @@
 package com.example.morho.mytest;
 
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -34,6 +36,7 @@ public class LostFragment extends Fragment implements View.OnClickListener {
 
     private EditText name, text_location, text_ot;
     private Spinner spinner;
+    private int historyHash;
 
 
     public LostFragment() {
@@ -77,6 +80,9 @@ public class LostFragment extends Fragment implements View.OnClickListener {
         text_ot = (EditText) view.findViewById(R.id.text_ot);
         spinner = (Spinner) view.findViewById(R.id.spinner);
         view.findViewById(R.id.lost_btn).setOnClickListener(this);
+        Button button = (Button) view.findViewById(R.id.btn_history);
+        button.setOnClickListener(this);
+        historyHash = button.hashCode();
         return view;
     }
 
@@ -92,9 +98,18 @@ public class LostFragment extends Fragment implements View.OnClickListener {
         new lost().execute(params);
     }
 
+    public void do_history() {
+        Intent intent = new Intent(this.getContext(), LostHistoryActivity.class);
+        startActivity(intent);
+    }
+
+
 
     @Override
     public void onClick(View v) {
+        if (v.hashCode() == this.historyHash) {
+            do_history();
+        }
         try {
             do_lost(v);
         } catch (UnsupportedEncodingException e) {

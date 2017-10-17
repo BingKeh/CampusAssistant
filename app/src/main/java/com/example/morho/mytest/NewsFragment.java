@@ -167,6 +167,7 @@ public class NewsFragment extends Fragment implements lost_item_Adapter.onItemCl
             entity.setImg(bg_array[i % 6]);
             entity.setTitle(data.get("title"));
             entity.setUsr_name(data.get("user_name"));
+            entity.setDate(data.get("lost_date").split(" ")[0]);
             adapter.addItem(adapter.getItemCount(), entity);
         }
         this.refreshLayout.setRefreshing(false);
@@ -217,7 +218,7 @@ public class NewsFragment extends Fragment implements lost_item_Adapter.onItemCl
         protected List<HashMap<String, String>> doInBackground(String... strings) {
             List<HashMap<String, String>> lost_list = null;
             try {
-                lost_list = new NetTool().get_lost_list();
+                lost_list = new NetTool().get_lost_list("");
             } catch (IOException e) {
                 e.printStackTrace();
             }

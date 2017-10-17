@@ -34,6 +34,6 @@ public class LostDetailActivity extends AppCompatActivity {
     }
 
     public void do_ok(View view) {
-        this.finish();
+        super.onBackPressed();
     }
 }

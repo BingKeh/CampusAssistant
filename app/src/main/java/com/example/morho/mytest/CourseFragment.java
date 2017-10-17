@@ -264,7 +264,7 @@ public class CourseFragment extends Fragment {
 
     private void init_course(List<CourseItem> list, Date date, GridLayout gridLayout, View t) throws ParseException {
         List<CourseItem> list_ret = CourseItem.getCourseThisWeek(list, date);
-        this.list = list_ret;
+        //this.list = list_ret;
         System.out.println(list_ret);
         addCourse(list_ret, gridLayout, t);
     }
@@ -314,7 +314,7 @@ public class CourseFragment extends Fragment {
             }
             Log.e("textViews info", "it's not a new view");
         } else {
-            Log.e("textViews info", "it's  a new view");
+            Log.e("textViews info", "it's a new view");
         }
         init_course(this.list, date, this.gridLayout, this.week_span);
     }
@@ -326,6 +326,7 @@ public class CourseFragment extends Fragment {
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(date);
             calendar.set(calendar.WEEK_OF_YEAR, calendar.get(calendar.WEEK_OF_YEAR) + week - 1);
+            Log.e("week count info", "the week is " + week);
             getWeekCourse(calendar.getTime(), false);
         } catch (ParseException e) {
             e.printStackTrace();

@@ -486,8 +486,13 @@ public class NetTool{
 
 
     public List<HashMap<String, String>> get_lost_list(String... params) throws IOException {
+        String usr = "";
+        if (params != null) {
+            usr = params[0];
+        }
         FormBody formBody = new FormBody.Builder()
                 .add("action", "DO_GET_LOST")
+                .add("usr", usr)
                 .build();
         Request request = new Request.Builder()
                 .url("http://115.159.216.38/app/do_action")

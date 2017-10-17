@@ -22,8 +22,6 @@ public class TermSelectDialogFragment extends DialogFragment {
         builder.setView(view);
         builder.setPositiveButton("OK", null);
         builder.setTitle("选择课程表");
-
-
         return builder.create();
     }
 }

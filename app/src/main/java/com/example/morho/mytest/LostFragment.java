@@ -109,6 +109,7 @@ public class LostFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         if (v.hashCode() == this.historyHash) {
             do_history();
+            return;
         }
         try {
             do_lost(v);

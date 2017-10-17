@@ -3,6 +3,7 @@ package com.example.morho.mytest;
 import android.graphics.drawable.Drawable;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -10,35 +11,44 @@ import java.util.Date;
  */
 
 public class Lost_Item_Entity implements Serializable{
-    private int lost_type;
+    private String lost_type;
     private String Title;
     private String context;
     private int usr_id;
-    private Date data;
+    private String date;
     private int img;
     private String usr_name;
+    private String status;
 
 
 
 
     public void initDefaultData(int index) {
-        this.lost_type = 1;
         this.Title = "失物招领 " + index;
         this.context = "校园卡  掉落地点：图书馆   学号： 202140916";
         this.usr_id = 202140904;
-        this.data = getData();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        this.date = simpleDateFormat.format(new Date());
     }
 
-    public int getLost_type() {
+    public String getLost_type() {
         return lost_type;
     }
 
-    public void setLost_type(int lost_type) {
+    public void setLost_type(String lost_type) {
         this.lost_type = lost_type;
     }
 
     public String getTitle() {
         return Title;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public void setTitle(String title) {
@@ -61,12 +71,12 @@ public class Lost_Item_Entity implements Serializable{
         this.usr_id = usr_id;
     }
 
-    public Date getData() {
-        return data;
+    public String getDate() {
+        return date;
     }
 
-    public void setData(Date data) {
-        this.data = data;
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public int getImg() {

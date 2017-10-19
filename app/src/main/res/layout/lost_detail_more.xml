@@ -9,18 +9,21 @@
     android:orientation="horizontal"
     app:layout_constraintTop_toTopOf="parent"
     app:layout_constraintLeft_toLeftOf="parent">
-
-    <TextView
-        android:id="@+id/lost_content"
-        android:background="@color/green"
+    <ScrollView
         android:layout_width="0dp"
-        android:layout_height="80dp"
         android:layout_weight="4"
-        android:scrollbars="vertical"
-        android:maxLines="4"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:text="This is a child item!" />
+        android:layout_height="80dp">
+        <TextView
+            android:id="@+id/lost_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="4"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="This is a child item!" />
+    </ScrollView>
+
+
 
 
 

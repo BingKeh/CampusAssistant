@@ -1,5 +1,6 @@
 package com.example.morho.mytest;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.os.AsyncTask;
@@ -10,6 +11,7 @@ import android.support.v4.content.res.TypedArrayUtils;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -146,6 +148,8 @@ public class AboutActivity extends AppCompatActivity implements AdapterView.OnIt
 //                    SharedPreferences.Editor editor = getSharedPreferences("data", MODE_PRIVATE).edit();
 //                    editor.putString("STATUS", "LOGOUT");
 //                    editor.commit();
+                    Intent intent = new Intent(this, SeatActivity.class);
+                    startActivity(intent);
                     break;
                 }
             }
@@ -159,6 +163,12 @@ public class AboutActivity extends AppCompatActivity implements AdapterView.OnIt
         public void run() {
 
         }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d("ACTIVITY INFO", "onPause invoked!");
     }
 
     private class do_click extends AsyncTask<String, Integer, String> {
@@ -178,6 +188,7 @@ public class AboutActivity extends AppCompatActivity implements AdapterView.OnIt
             showDialog();
         }
     }
+
 
 
 }

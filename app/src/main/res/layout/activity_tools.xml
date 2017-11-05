@@ -20,6 +20,7 @@
         app:layout_constraintTop_toBottomOf="@id/tools_toolbar"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/lost_frag"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:layout_editor_absoluteX="8dp"
@@ -27,13 +28,14 @@
         android:columnCount="3"
         android:rowCount="3">
 
-
     </GridLayout>
 
     <FrameLayout
         android:id="@+id/lost_frag"
         app:layout_constraintTop_toBottomOf="@id/tools_grid"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 

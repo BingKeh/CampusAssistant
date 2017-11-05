@@ -24,6 +24,7 @@
 
             <solid
                 android:color="@color/base" />
+
         </shape>
     </item>
 
@@ -69,7 +70,7 @@
                 android:height="20dp" />
 
             <solid
-                android:color="@color/base" />
+                android:color="@color/green" />
 
         </shape>
 

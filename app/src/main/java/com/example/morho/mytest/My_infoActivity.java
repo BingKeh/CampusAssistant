@@ -72,7 +72,7 @@ public class My_infoActivity extends AppCompatActivity implements GetCodeCallbac
     }
 
     private void init_net() {
-        String[] act = {"GET_CODE", "http://jwjx.njit.edu.cn/CheckCode.aspx"};
+        String[] act = {"GET_CODE", "http://202.119.160.5/CheckCode.aspx"};
         new get_code().execute(act);
     }
 
@@ -241,7 +241,7 @@ public class My_infoActivity extends AppCompatActivity implements GetCodeCallbac
             } else if (act.equals("DO_LOGIN_JWC")) {
                 System.out.println("do_login_jwc now ......");
                 data.put("ACT", params[0]);
-                String url = "http://jwjx.njit.edu.cn/Default2.aspx";
+                String url = "http://202.119.160.5/Default2.aspx";
                 String usr = params[1];
                 String psd = params[2];
                 String code = params[3];

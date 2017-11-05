@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
@@ -35,10 +36,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, NewsFragment.OnListFragmentInteractionListener,
@@ -47,6 +52,7 @@ public class MainActivity extends AppCompatActivity
     private DrawerLayout drawer;
     private TextView usr_name;
     private TextView ins_name;
+    private TextView aqi_text;
     private View header;
     private NavigationView navigationView;
     private boolean is_logged;
@@ -97,12 +103,17 @@ public class MainActivity extends AppCompatActivity
         header = navigationView.getHeaderView(0);
         this.usr_name = (TextView) header.findViewById(R.id.nav_usr_text);
         this.ins_name = (TextView) header.findViewById(R.id.nav_ins_text);
+        this.aqi_text = (TextView) header.findViewById(R.id.AQIText);
         this.img = (ImageView) header.findViewById(R.id.usr_img);
         this.search_box = (LinearLayout) this.findViewById(R.id.search_box_expanded);
         this.search_view = (EditText) findViewById(R.id.search_view);
+
+
         init_user();
         init_fragment();
         //showtest();
+        new MainNet().execute("");
+
     }
 
     private void init_fragment() {
@@ -127,15 +138,15 @@ public class MainActivity extends AppCompatActivity
             return;
         }
         if (share_data.getString("STATUS", null).equals("LOGGED")) {
-            this.is_logged = true;
-            System.out.println("It's true");
-            usr_name.setText(share_data.getString("USR_NAME", null));
-            ins_name.setText(share_data.getString("STU_ACADEMY", null));
-            App_DATA data = (App_DATA) getApplication();
-            data.setName(share_data.getString("USR_NAME", null));
-        } else {
-            this.is_logged = false;
-            System.out.println("It's false");
+                this.is_logged = true;
+                System.out.println("It's true");
+                usr_name.setText(share_data.getString("USR_NAME", null));
+                ins_name.setText(share_data.getString("STU_ACADEMY", null));
+                App_DATA data = (App_DATA) getApplication();
+                data.setName(share_data.getString("USR_NAME", null));
+            } else {
+                this.is_logged = false;
+                System.out.println("It's false");
         }
 
     }
@@ -524,6 +535,31 @@ public class MainActivity extends AppCompatActivity
             checkFragment(this.fragment[index], transaction);
             transaction.commit();
             this.fragment[4] = this.fragment[index];
+        }
+    }
+
+    public void initAQI(String aqi) {
+        Log.d("AQI DEBUG", "the aqi is " + aqi);
+        this.aqi_text.setText(aqi_text.getText() + aqi);
+    }
+
+    private class MainNet extends AsyncTask<String, Integer, String> {
+
+        @Override
+        protected void onPostExecute(String s) {
+            initAQI(s);
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                HashMap<String, String> data = new NetTool().getLastPM();
+                String value = data.get("value");
+                return value;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return "";
         }
     }
 

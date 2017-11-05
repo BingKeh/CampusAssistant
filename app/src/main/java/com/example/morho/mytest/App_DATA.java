@@ -4,7 +4,7 @@ import android.app.Application;
 import android.os.StrictMode;
 
 /**
- * Created by Morho on 8/8/2017.
+ * Created by Morhop on 8/8/2017.
  */
 
 public class App_DATA extends Application {

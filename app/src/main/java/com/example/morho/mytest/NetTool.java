@@ -39,7 +39,7 @@ public class NetTool{
 
     public static String stu_name;
     public static String stu_id;
-    public static String host = "http://jwjx.njit.edu.cn";
+    public static String host = "http://202.119.160.5";
     public static String VIEWSTATE;
 
     public static final OkHttpClient httpclient = new OkHttpClient.Builder()
@@ -85,7 +85,7 @@ public class NetTool{
 
     public Bitmap getCode(String url) throws IOException {
         Request request = new Request.Builder()
-                .url("http://jwjx.njit.edu.cn/Default2.aspx")
+                .url("http://202.119.160.5/Default2.aspx")
                 .build();
         Response response = httpclient.newCall(request).execute();
 
@@ -504,6 +504,92 @@ public class NetTool{
             List<HashMap<String, String>> list = new ArrayList<>();
             list = new Gson().fromJson(source, new TypeToken<List<HashMap<String, String>>>(){}.getType());
             return list;
+        }
+        return null;
+    }
+
+    public int getSeatCount(String location) throws IOException {
+        FormBody formBody = new FormBody.Builder()
+                .add("action", "DO_GET_TABLE")
+                .add("location", location)
+                .build();
+        Request request = new Request.Builder()
+                .url("http://115.159.216.38/app/do_action")
+                .post(formBody)
+                .build();
+        Response response = httpclient.newCall(request).execute();
+        String source = response.body().string();
+        if (source != null) {
+            HashMap<String, String> data = new HashMap<>();
+            data = new Gson().fromJson(source, new TypeToken<HashMap<String, String>>(){}.getType());
+            return Integer.parseInt(data.get("count"));
+        }
+        return -1;
+    }
+
+
+    public List<List<Double>> getSeatDetail(String location, String name) throws IOException {
+        FormBody formBody = new FormBody.Builder()
+                .add("action", "DO_GET_SEAT")
+                .add("name", name)
+                .add("location", location)
+                .build();
+        Request request = new Request.Builder()
+                .url("http://115.159.216.38/app/do_action")
+                .post(formBody)
+                .build();
+        Response response = httpclient.newCall(request).execute();
+        String source = response.body().string();
+        if (source != null) {
+            HashMap<String, Object> data = new HashMap<>();
+            data = new Gson().fromJson(source, new TypeToken<HashMap<String, Object>>(){}.getType());
+            List<Double> self_book = (List<Double>) data.get("self_book");
+            List<List<Double>> list = (List<List<Double>>) data.get("seat_data");
+            list.add(self_book);
+            Log.d("LIST DEBUG", list.toString());
+            return list;
+        }
+        return null;
+    }
+
+    public boolean getBookStatus(String... params) throws IOException {
+        FormBody formBody = new FormBody.Builder()
+                .add("action", "DO_BOOK_SEAT")
+                .add("name", params[0])
+                .add("table", params[1])
+                .add("seat", params[2])
+                .build();
+        Request request = new Request.Builder()
+                .url("http://115.159.216.38/app/do_action")
+                .post(formBody)
+                .build();
+        Response response = httpclient.newCall(request).execute();
+        String source = response.body().string();
+        if (source != null) {
+            Log.d("BOOK DEBUG", source);
+            HashMap<String, String> data = new HashMap<>();
+            data = new Gson().fromJson(source, new TypeToken<HashMap<String, Object>>(){}.getType());
+            boolean flag =  data.get("result").equals("true") ? true : false;
+            return flag;
+        }
+        return false;
+    }
+
+    public HashMap<String, String> getLastPM() throws IOException {
+        FormBody formBody = new FormBody.Builder()
+                .add("action", "DO_GET_LAST_PM")
+                .build();
+        Request request = new Request.Builder()
+                .url("http://115.159.216.38/app/do_action")
+                .post(formBody)
+                .build();
+        Response response = httpclient.newCall(request).execute();
+        String source = response.body().string();
+        if (source != null) {
+            Log.d("BOOK DEBUG", source);
+            HashMap<String, String> data = new HashMap<>();
+            data = new Gson().fromJson(source, new TypeToken<HashMap<String, String>>(){}.getType());
+            return data;
         }
         return null;
     }

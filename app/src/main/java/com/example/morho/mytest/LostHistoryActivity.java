@@ -16,8 +16,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -25,9 +27,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-public class LostHistoryActivity extends AppCompatActivity implements LostHistoryAdapter.LostListener {
+public class LostHistoryActivity extends AppCompatActivity implements LostHistoryAdapter.LostListener, View.OnClickListener {
     private RecyclerView recyclerView;
     private LostHistoryAdapter adapter;
+    private int PostItemID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,14 +45,6 @@ public class LostHistoryActivity extends AppCompatActivity implements LostHistor
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
         recyclerView.addItemDecoration(new MyDecoration(this));
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 //        recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
 //
 //            float time;
@@ -169,9 +164,12 @@ public class LostHistoryActivity extends AppCompatActivity implements LostHistor
             entity.setUsr_name(data.get("user_name"));
             entity.setDate(data.get("lost_date").split(" ")[0]);
             entity.setLost_type(data.get("cate"));
+            entity.setLost_id(Integer.parseInt(data.get("idlost_item")));
             String status = data.get("status");
             if (status.equals(0 + "")) {
                 status = "有效";
+            } else if (status.equals(1 + "")){
+                status = "解决";
             } else {
                 status = "失效";
             }
@@ -186,6 +184,8 @@ public class LostHistoryActivity extends AppCompatActivity implements LostHistor
         super.onSaveInstanceState(outState, outPersistentState);
     }
 
+
+    // onClick for CardView
     @Override
     public void onClick(View v, LostHistoryAdapter.ViewHolder holder, Lost_Item_Entity entity) {
         LinearLayout layout = (LinearLayout) v.findViewById(R.id.content);
@@ -195,6 +195,14 @@ public class LostHistoryActivity extends AppCompatActivity implements LostHistor
             View childView = inflater.inflate(R.layout.lost_detail_more, null);
             layout.addView(childView);
             TextView content  = (TextView) layout.findViewById(R.id.lost_content);
+            Button btn = (Button) childView.findViewById(R.id.lostOkbtn);
+            btn.setTag(entity);
+            btn.setOnClickListener(this);
+            if (entity.getStatus().equals("失效") || entity.getStatus().equals("已解决")) {
+                btn.setClickable(false);
+            }
+
+
             content.setText(entity.getContext());
             LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) childView.getLayoutParams();
             int top = MyTool.dip2px(12, getResources());
@@ -205,6 +213,46 @@ public class LostHistoryActivity extends AppCompatActivity implements LostHistor
             v.setTag(0);
         }
         Log.e("holder info", "title is " + holder.title.getText().toString());
+    }
+
+
+    // onClick for button
+    @Override
+    public void onClick(View v) {
+        Lost_Item_Entity entity = (Lost_Item_Entity) v.getTag();
+        Log.e("LOST INFO", "the id is " + entity.getLost_id());
+
+        new post_status().execute(entity.getLost_id() + "", 1 + "");
+    }
+
+    public void showPostStatus(boolean flag) {
+        String result = flag ? "成功 " : "失败 ";
+        Toast.makeText(this, "提交" + result, Toast.LENGTH_SHORT).show();
+        if (flag) {
+            this.adapter.initList();
+            new lost_net().execute("");
+        }
+    }
+
+    private class post_status extends AsyncTask<String, Integer, Boolean> {
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            showPostStatus(aBoolean);
+        }
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+            int id = Integer.parseInt(params[0]);
+            int status = Integer.parseInt(params[1]);
+            boolean flag = false;
+            try {
+                flag = new NetTool().postStatus(id, status);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return flag;
+        }
     }
 
 

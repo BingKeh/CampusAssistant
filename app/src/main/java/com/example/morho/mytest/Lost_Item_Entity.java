@@ -20,6 +20,16 @@ public class Lost_Item_Entity implements Serializable{
     private String usr_name;
     private String status;
 
+    public int getLost_id() {
+        return lost_id;
+    }
+
+    public void setLost_id(int lost_id) {
+        this.lost_id = lost_id;
+    }
+
+    private int lost_id;
+
 
 
 

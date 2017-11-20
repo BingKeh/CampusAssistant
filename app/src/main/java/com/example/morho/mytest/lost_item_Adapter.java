@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Morho on 8/13/2017.
+ * Created by Morhop on 8/13/2017.
  */
 
 public class lost_item_Adapter extends RecyclerView.Adapter<lost_item_Adapter.MyViewHolder> {

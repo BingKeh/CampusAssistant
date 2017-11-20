@@ -433,6 +433,18 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d("Activity life circle", "onPause invoked!");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d("Activity life circle", "onStop invoked!");
+    }
+
+    @Override
     protected void onResume() {
         isExsiting = false;
         init_user();

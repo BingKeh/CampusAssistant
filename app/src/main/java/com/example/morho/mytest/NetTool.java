@@ -481,7 +481,7 @@ public class NetTool{
         HashMap<String, Object> ret = new HashMap<>();
         ret = new Gson().fromJson(source, ret.getClass());
         Log.e("do lost upload result", "the result is " + ret.get("Result").toString());
-        return false;
+        return (boolean) ret.get("Result");
     }
 
 
@@ -506,6 +506,27 @@ public class NetTool{
             return list;
         }
         return null;
+    }
+
+    public boolean postStatus(int id, int status) throws IOException {
+        FormBody formBody = new FormBody.Builder()
+                .add("action", "DO_POST_STATUS")
+                .add("id", id + "")
+                .add("status", status + "")
+                .build();
+        Request request = new Request.Builder()
+                .url("http://115.159.216.38/app/do_action")
+                .post(formBody)
+                .build();
+        Response response = httpclient.newCall(request).execute();
+        String source = response.body().string();
+        if (source != null) {
+            HashMap<String, String> result = new HashMap<>();
+            result = new Gson().fromJson(source, new TypeToken<HashMap<String, String>>(){}.getType());
+            boolean flag = result.get("result").equals("succeed") ? true : false;
+            return flag;
+        }
+        return false;
     }
 
     public int getSeatCount(String location) throws IOException {

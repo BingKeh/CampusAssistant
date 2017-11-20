@@ -40,13 +40,13 @@ public class SeatActivity extends AppCompatActivity implements View.OnClickListe
         //Log.d("DEBUG", ""+ this.img.toString());
         this.gridLayout = (GridLayout) findViewById(R.id.grid);
         app = (App_DATA) getApplication();
-        new SeatAsync().execute(new String[] { "GET_SEAT", "1" , app.getName()});
+        new SeatAsync().execute("GET_SEAT", "1", app.getName());
     }
 
     @Override
     public void onClick(View v) {
         SeatImageView seatImageView = (SeatImageView) v;
-        Log.d("img debug", "view id is " + v.toString() + " seat id is " + seatImageView.getSeat() + " !");
+        Log.d("img debug", "view id is " + v.toString() + " seat id is " + Arrays.toString(seatImageView.getSeat()) + " !");
         this.img = seatImageView;
         if (this.img.isSeatSelected()) {
             this.showAlert(seatImageView.getSeat(), seatImageView.getNo());
@@ -90,7 +90,7 @@ public class SeatActivity extends AppCompatActivity implements View.OnClickListe
                 String seat = this.img.getSeat()[1] + "";
                 String name = app.getName();
                 Log.e("NAME DEBUG", "name is " + name);
-                new SeatAsync().execute(new String[] { "BOOK_SEAT", name, table, seat, location });
+                new SeatAsync().execute("BOOK_SEAT", name, table, seat, location);
                 break;
         }
     }

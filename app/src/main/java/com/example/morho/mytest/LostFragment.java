@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -98,6 +99,21 @@ public class LostFragment extends Fragment implements View.OnClickListener {
         new lost().execute(params);
     }
 
+    public void postUpload(boolean flag) {
+        if (flag) {
+            Toast.makeText(getActivity(), "提交成功", Toast.LENGTH_SHORT).show();
+            initText();
+        } else {
+            Toast.makeText(getActivity(), "提交失败", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void initText() {
+        name.setText("");
+        text_location.setText("");
+        text_ot.setText("");
+    }
+
     public void do_history() {
         Intent intent = new Intent(this.getContext(), LostHistoryActivity.class);
         startActivity(intent);
@@ -122,7 +138,8 @@ public class LostFragment extends Fragment implements View.OnClickListener {
 
         @Override
         protected void onPostExecute(Boolean aBoolean) {
-            Log.e("lost test", "do lost succeed!");
+            Log.e("lost test", "do lost " + aBoolean);
+            postUpload(aBoolean);
         }
 
         @Override

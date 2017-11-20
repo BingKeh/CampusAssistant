@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -46,6 +47,9 @@ public class LostHistoryAdapter extends RecyclerView.Adapter<LostHistoryAdapter.
         if (status.equals("失效")) {
             holder.status.setTextColor(Color.RED);
         }
+        if (status.equals("解决")) {
+            holder.status.setTextColor(Color.BLUE);
+        }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,6 +85,8 @@ public class LostHistoryAdapter extends RecyclerView.Adapter<LostHistoryAdapter.
     }
 
     public Lost_Item_Entity getItem(int position) { return  this.list.get(position); }
+
+    public void initList() { this.list = new ArrayList<>(); }
 
     protected interface LostListener {
         void onClick(View v, ViewHolder holder, Lost_Item_Entity entity);
